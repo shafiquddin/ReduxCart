@@ -6,6 +6,8 @@ import { Fragment, useEffect } from "react";
 import { uiActions } from "./store/ui-slice";
 import Notification from "./components/UI/Notification";
 
+let isInitial = true;
+
 function App() {
   const cartVisiblity = useSelector((state) => state.ui.cartIsVisible);
   const cart = useSelector((state) => state.cart);
@@ -37,6 +39,12 @@ function App() {
         message:'Send cart data Successfully!'
       }))
     }
+
+    if(isInitial){
+      isInitial = false;
+      return
+    }
+
     sendCartData().catch(error=>{
       dispatch(uiActions.showNotification({
         status:'error',
